@@ -477,5 +477,190 @@
     scrollbar-width: thin;
     scrollbar-color: #00ffff rgba(0, 20, 40, 0.5);
 }
+/* Enhanced Satellite Info Card */
+.satellite-info-card {
+    background: linear-gradient(135deg, rgba(0, 20, 40, 0.95), rgba(0, 40, 80, 0.95));
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    padding: 20px;
+    font-family: 'Orbitron', monospace;
+    color: white;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
 
+.satellite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #00ffff;
+    padding-bottom: 10px;
+}
 
+.satellite-header h3 {
+    margin: 0;
+    color: #00ffff;
+    font-size: 1.2em;
+}
+
+.satellite-badge {
+    background: linear-gradient(45deg, #00ff88, #00cccc);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: black;
+}
+
+.satellite-details {
+    margin: 15px 0;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.detail-row .label {
+    color: #aaa;
+    font-weight: normal;
+}
+
+.detail-row .value {
+    color: #00ffff;
+    font-weight: bold;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-track, .btn-info {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-track {
+    background: linear-gradient(45deg, #00ff88, #00cccc);
+    color: black;
+}
+
+.btn-info {
+    background: linear-gradient(45deg, #0088ff, #00ccff);
+    color: white;
+}
+
+.btn-track:hover, .btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+}
+
+/* Enhanced Console Output */
+.console-line {
+    padding: 8px 12px;
+    margin: 2px 0;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid #00ffff;
+    transition: all 0.3s ease;
+}
+
+.console-line:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+/* Enhanced Notification */
+#notification {
+    background: linear-gradient(135deg, #00ffff, #0088ff);
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+}
+
+/* ============================================
+   SatOpsDSL - Enhanced app.css
+   Paste over your existing CSS file (app.css)
+   ============================================ */
+
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+html, body { height:100%; }
+body { background:#000; color:#fff; overflow:hidden; }
+
+#cesiumContainer { position:absolute; inset:0; z-index:1; }
+
+/* Overlay base */
+.overlay { position:absolute; z-index:10; pointer-events:none; }
+.overlay > * { pointer-events:auto; }
+
+/* Header */
+.header { top:0; left:0; width:100%; padding:18px 36px; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); }
+.logo { font-size:28px; font-weight:700; background:linear-gradient(90deg,#00ffff,#0080ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 10px rgba(0,255,255,0.2); }
+.status-bar { display:flex; gap:28px; }
+.status-item { display:flex; flex-direction:column; align-items:center; }
+.status-label { font-size:12px; color:#aaa; margin-bottom:4px; }
+.status-value { font-size:16px; color:#00ffff; font-weight:700; }
+
+/* Console panel */
+.console-panel { left:20px; bottom:20px; width:520px; height:320px; background:rgba(6,12,20,0.9); border:1px solid rgba(0,255,255,0.12); border-radius:10px; box-shadow:0 8px 40px rgba(0,200,255,0.06); backdrop-filter:blur(8px); display:flex; flex-direction:column; overflow:hidden; transition:height 0.28s ease; }
+.panel-header { padding:12px 14px; background:rgba(0,10,20,0.85); border-bottom:1px solid rgba(0,255,255,0.06); display:flex; justify-content:space-between; align-items:center; }
+.panel-title { font-size:15px; color:#00ffff; font-weight:700; }
+.panel-toggle-btn { background:rgba(0,255,255,0.06); border:1px solid rgba(0,255,255,0.08); width:28px; height:28px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.console-panel.minimized { height:50px; }
+.console-content { flex:1; padding:14px; overflow-y:auto; font-family:'Courier New', monospace; font-size:13px; color:#bfffdc; }
+.console-line { padding:8px 12px; margin:6px 0; border-radius:6px; background:linear-gradient(150deg, rgba(0,0,0,0.25), rgba(0,0,0,0.12)); border-left:3px solid rgba(0,255,255,0.12); transition:transform 0.18s ease, box-shadow 0.18s ease; }
+.console-line:hover { transform:translateX(6px); box-shadow:0 8px 30px rgba(0,180,255,0.06); }
+.prompt { color:#00ffff; margin-right:6px; }
+.command-input { display:flex; padding:10px 14px; border-top:1px solid rgba(0,255,255,0.04); background:linear-gradient(180deg, rgba(0,10,20,0.9), rgba(0,0,0,0.65)); }
+.command-prefix { color:#00ffff; margin-right:8px; }
+.command-field { flex:1; background:transparent; border:none; outline:none; color:#bfffdc; font-family:'Courier New', monospace; font-size:13px; }
+
+/* Info panel */
+.info-panel { right:20px; top:110px; width:360px; display:flex; flex-direction:column; gap:14px; }
+.info-card { background:rgba(6,12,20,0.9); border:1px solid rgba(0,150,255,0.06); border-radius:10px; box-shadow:0 8px 30px rgba(0,120,255,0.04); padding:0; overflow:hidden; }
+.card-header { padding:12px 14px; background:linear-gradient(180deg, rgba(0,20,40,0.9), rgba(0,10,20,0.9)); border-bottom:1px solid rgba(0,150,255,0.04); }
+.card-title { font-size:15px; color:#0099ff; font-weight:700; }
+.card-content { padding:12px 14px; }
+
+.satellite-list { list-style:none; max-height:320px; overflow-y:auto; }
+.satellite-item { padding:10px; border-bottom:1px solid rgba(255,255,255,0.02); cursor:pointer; transition:all 0.25s ease; position:relative; }
+.satellite-item:hover { transform:translateX(6px); box-shadow:0 10px 30px rgba(0,160,255,0.03); }
+.satellite-item.active { background:linear-gradient(90deg, rgba(0,100,200,0.18), rgba(0,60,120,0.12)); border-left:4px solid #00ffff; animation: pulse 1.5s infinite; }
+.sat-name { font-weight:700; color:#00ffff; }
+.sat-info { font-size:12px; color:#aaa; }
+
+@keyframes pulse { 0%{ box-shadow:0 0 8px rgba(0,255,255,0.06);} 50%{ box-shadow:0 0 20px rgba(0,255,255,0.12);} 100%{ box-shadow:0 0 8px rgba(0,255,255,0.06);} }
+
+.command-history { max-height:200px; overflow-y:auto; }
+.history-item { padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.03); font-size:12px; color:#aaa; }
+.history-time { color:#0088ff; margin-right:10px; }
+.history-command { color:#bfffdc; }
+
+.notification { position:absolute; top:22px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,#00ffff,#0088ff); border-radius:6px; padding:8px 18px; color:#001; font-weight:800; z-index:100; opacity:0; transition:opacity 0.24s ease, transform 0.24s ease; }
+.notification.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* small helpers */
+.status-indicator { width:10px; height:10px; border-radius:50%; background:#00ff00; box-shadow:0 0 10px #00ff00; }
+.status-indicator.offline { background:#ff0000; box-shadow:0 0 10px #ff0000; }
+
+/* Tooltip */
+.tooltip { position:absolute; background:rgba(0,20,40,0.98); border:1px solid rgba(0,255,255,0.08); padding:6px 10px; border-radius:6px; color:#00ffff; font-size:12px; pointer-events:none; box-shadow:0 6px 24px rgba(0,160,255,0.06); }
+
+/* responsive tweaks */
+@media (max-width:900px) {
+  .console-panel { width: 420px; }
+  .info-panel { width: 300px; }
+}

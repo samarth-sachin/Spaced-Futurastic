@@ -9,7 +9,7 @@
     // ============================================
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWZiNDJkNy0yZWEwLTQ5OWQtYjk0MS0xOThlMTIxMDg1YTgiLCJpZCI6MzMyOTY1LCJpYXQiOjE3NTU1MTcyNzR9.raBDIk08ACyJ5JbAiqca_PFRHh1MyGLi3Bqfej5sL9Q';
 
-    const viewer = new Cesium.Viewer('cesiumContainer', {
+   /* const viewer = new Cesium.Viewer('cesiumContainer', {
         animation: true,
         baseLayerPicker: false,
         fullscreenButton: false,
@@ -32,12 +32,60 @@
     viewer.scene.backgroundColor = Cesium.Color.BLACK;
     viewer.scene.globe.showGroundAtmosphere = true;
     viewer.clock.shouldAnimate = true;
-    viewer.clock.multiplier = 1;
+    viewer.clock.multiplier = 1;*/
+
+    const viewer = new Cesium.Viewer("cesiumContainer", {
+        terrainProvider: Cesium.createWorldTerrain(),
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: false,
+        animation: false,
+        fullscreenButton: false,
+        homeButton: false,
+        navigationHelpButton: false,
+        sceneModePicker: false,
+        infoBox: false,
+        selectionIndicator: false,
+
+        imageryProvider: new Cesium.IonImageryProvider({ assetId: 3 }) // Bing high-res imagery
+    });
+
+    // Enable atmospheric effects
+    viewer.scene.skyAtmosphere.show = true;
+
+    // Enable beautiful shadows
+    viewer.shadows = true;
+    viewer.scene.globe.enableLighting = true;
+
+    // Enable water specular reflections
+    viewer.scene.globe.enableLighting = true;
+    viewer.scene.globe.showWaterEffect = true;
+
+    // HDR + Bloom
+    viewer.scene.highDynamicRange = true;
+    viewer.scene.bloomEnabled = true;
+
+    // Enable MSAA for smooth edges (Cesium 1.90+)
+    viewer.scene.msaaSamples = 4;
+
+    // Eye candy tone mapping
+    viewer.scene.gamma = 1.8;
+    viewer.scene.minimumBrightness = 0.4;
+
+    viewer.scene.globe.enableLighting = true;
+    viewer.scene.globe.nightFadeIn = 0.2;
+    viewer.scene.globe.nightFadeOut = 0.6;
+
 
     viewer.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(0, 0, 25000000),
-        orientation: { heading: 0, pitch: -1.57, roll: 0 }
+        destination: Cesium.Cartesian3.fromDegrees(78, 20, 20000000),
+        orientation: {
+            heading: 0,
+            pitch: -1.57,
+            roll: 0
+        }
     });
+
     // ============================================
     // ENHANCED CAMERA CONTROLS
     // ============================================
@@ -534,6 +582,16 @@ document.addEventListener('keydown', (e) => {
         // case 'H':
         //     viewer.camera.flyHome(2);
         //     stopTracking();
+        case 'h':
+        case 'H':
+            viewer.camera.flyTo({
+                destination: Cesium.Cartesian3.fromDegrees(78.9629, 20.5937, 20000000),
+                duration: 2
+            });
+            stopTracking();
+            showNotification("Centered on India");
+            break;
+
             break;
         case 's':
         case 'S':
@@ -607,6 +665,13 @@ document.addEventListener('keydown', (e) => {
     // ============================================
     let satellites = [];
     let selectedSatellite = null;
+
+    // ============================================
+    // REAL-TIME SATELLITE TRAIL FUNCTION REMOVED
+    // ============================================
+    // The 'createSatelliteTrail' function was causing the 'undefined' height crash.
+    // It has been removed to ensure stability.
+
 
     // ============================================
     // ANIMATED ORBIT VISUALIZATION
@@ -772,7 +837,6 @@ document.addEventListener('keydown', (e) => {
         return createSimpleSatellite(satellite);
     }
 }
-
 
     function createSimpleSatellite(satellite) {
         const satId = satellite.satelliteId || satellite.id;
@@ -1040,8 +1104,18 @@ setInterval(updateCommunicationLinks, 3000);
 
     function updateSystemTime() {
         const now = new Date();
-        systemTime.textContent = now.toUTCString().split(' ')[4] + ' UTC';
+
+        // IST = UTC + 5 hours 30 minutes
+        const istOffset = 5.5 * 60 * 60 * 1000;
+        const istTime = new Date(now.getTime() + istOffset);
+
+        const hh = String(istTime.getUTCHours()).padStart(2, '0');
+        const mm = String(istTime.getUTCMinutes()).padStart(2, '0');
+        const ss = String(istTime.getUTCSeconds()).padStart(2, '0');
+
+        systemTime.textContent = `${hh}:${mm}:${ss} IST`;
     }
+
     setInterval(updateSystemTime, 1000);
     updateSystemTime();
 
